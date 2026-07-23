@@ -9,7 +9,7 @@ Client-side image → MakeCode Arcade sprite converter.
 - MakeCode Arcade 16-color palette (OKLab matching)
 - Transparency: black → `.`, white → `.`, keep background, or edge flood fill
 - Optional Floyd–Steinberg dithering
-- Output: `let mySprite = sprites.create(img\`...\`, SpriteKind.Player)`
+- Output: `hero.setImage(img\`...\`)` — replaces the image of an existing sprite in the project
 - Runs entirely in the browser
 
 ## Local development

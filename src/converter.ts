@@ -158,7 +158,8 @@ export function convertImage(
   getContext(previewCanvas).putImageData(preview, 0, 0)
 
   const variableName = sanitizeVariableName(options.variableName)
-  const code = `let ${variableName} = sprites.create(img\`\n${rows.join('\n')}\n\`, SpriteKind.Player)`
+  // setImage — for stubs that already have the sprite (e.g. Arcade Remix hero).
+  const code = `${variableName}.setImage(img\`\n${rows.join('\n')}\n\`)`
 
   return { code, canvas: previewCanvas, transparentPixels, width, height }
 }

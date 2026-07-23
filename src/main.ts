@@ -61,7 +61,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <div class="field-grid single-field">
             <label>
               Sprite name
-              <input id="variable-name" type="text" value="mySprite" spellcheck="false" />
+              <input id="variable-name" type="text" value="hero" spellcheck="false" />
             </label>
           </div>
 
