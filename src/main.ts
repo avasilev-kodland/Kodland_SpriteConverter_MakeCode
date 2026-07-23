@@ -20,7 +20,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
   <main>
     <section class="intro">
-      <h1>Image to MakeCode Arcade sprite</h1>
+      <h1>Image to MakeCode Arcade sprite by Kodland</h1>
     </section>
 
     <section class="workspace">
