@@ -45,10 +45,13 @@ server.listen(port, '0.0.0.0', () => {
 })
 
 function send(response, status, body, contentType) {
+  // No frame-ancestors / X-Frame-Options: Kodland wraps <embed> in a sandboxed
+  // iframe (opaque ancestor). CSP frame-ancestors — even "*" — triggers
+  // ERR_BLOCKED_BY_RESPONSE there. Omitting the directive allows any parent.
   response.writeHead(status, {
     'Content-Type': contentType,
     'Content-Security-Policy':
-      "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; frame-ancestors *; base-uri 'self'; form-action 'self'",
+      "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; base-uri 'self'; form-action 'self'",
     'Referrer-Policy': 'no-referrer',
     'X-Content-Type-Options': 'nosniff',
   })

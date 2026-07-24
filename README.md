@@ -35,3 +35,10 @@ npm run start
 5. Add a public domain under Settings → Networking.
 
 No environment variables required.
+
+### Embed on Kodland
+
+Use `https://…` in `<embed src>`. The server must **not** send `frame-ancestors` /
+`X-Frame-Options`: the platform nests embeds in a sandboxed iframe, and those
+headers cause `ERR_BLOCKED_BY_RESPONSE` even with `frame-ancestors *`.
+
