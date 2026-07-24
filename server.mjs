@@ -16,6 +16,14 @@ const mimeTypes = {
 }
 
 const server = createServer(async (request, response) => {
+  // Kodland nests <embed> in a sandboxed iframe (often opaque origin).
+  // Keep responses embed-friendly: no CSP / X-Frame-Options, open CORS.
+  if (request.method === 'OPTIONS') {
+    response.writeHead(204, corsHeaders())
+    response.end()
+    return
+  }
+
   try {
     const url = new URL(request.url ?? '/', 'http://localhost')
     const requestedPath = decodeURIComponent(url.pathname)
@@ -44,16 +52,20 @@ server.listen(port, '0.0.0.0', () => {
   console.log(`Arcade Sprite Lab is running on port ${port}`)
 })
 
+function corsHeaders() {
+  return {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS',
+    'Access-Control-Allow-Headers': '*',
+    'Cross-Origin-Resource-Policy': 'cross-origin',
+  }
+}
+
 function send(response, status, body, contentType) {
-  // No frame-ancestors / X-Frame-Options: Kodland wraps <embed> in a sandboxed
-  // iframe (opaque ancestor). CSP frame-ancestors — even "*" — triggers
-  // ERR_BLOCKED_BY_RESPONSE there. Omitting the directive allows any parent.
   response.writeHead(status, {
     'Content-Type': contentType,
-    'Content-Security-Policy':
-      "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; base-uri 'self'; form-action 'self'",
-    'Referrer-Policy': 'no-referrer',
     'X-Content-Type-Options': 'nosniff',
+    ...corsHeaders(),
   })
   response.end(body)
 }
